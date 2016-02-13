@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/330-hidden-dragon/ryan-whyyy/issues"
   },
-  "homepage": "https://github.com/330-hidden-dragon/ryan-whyyy#readme"
+  "homepage": "https://github.com/330-hidden-dragon/ryan-whyyy#readme",
+  "dependencies": {
+    "pouchdb": "^5.2.1"
+  }
 }
