@@ -13,5 +13,6 @@ final project of
 This application makes use of:
 
 * Layers.css
-* Probably some JS libraries
+* PouchDB
+* gulp (for making tasks easier)
 
