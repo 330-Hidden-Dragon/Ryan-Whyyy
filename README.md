@@ -8,3 +8,10 @@ final project of
 * Yannick Mamudo (@yannick-mamudo)
 * Ryan Miller (@rystm)
 
+### Framework
+
+This application makes use of:
+
+* Layers.css
+* Probably some JS libraries
+

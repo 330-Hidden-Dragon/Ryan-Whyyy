@@ -1,0 +1,19 @@
+{
+  "name": "ryan-whyyy",
+  "version": "0.0.1",
+  "description": "This is the repository for the EECS 330 Human-Computer Interaction final project of",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/330-hidden-dragon/ryan-whyyy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/330-hidden-dragon/ryan-whyyy/issues"
+  },
+  "homepage": "https://github.com/330-hidden-dragon/ryan-whyyy#readme"
+}
