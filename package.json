@@ -21,10 +21,13 @@
   },
   "devDependencies": {
     "bify-wify": "^1.0.3",
+    "browser-sync": "^2.11.1",
     "gulp": "^3.9.1",
     "gulp-csso": "^1.0.1",
+    "gulp-jade": "^1.1.0",
     "gulp-load-plugins": "^1.2.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-stylus": "^2.3.0"
+    "gulp-stylus": "^2.3.0",
+    "uglifyify": "^3.0.1"
   }
 }
