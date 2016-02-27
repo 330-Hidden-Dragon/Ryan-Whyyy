@@ -12,6 +12,7 @@ var path = {
   jsall: 'src/js/**/*.js',
   stylus: 'src/stylus/main.styl',
   jade: 'src/**/*.jade',
+  images: 'src/images/**/*.{jpg,jpeg,png,gif}',
 }
 
 // NOTE(jordan): destination paths for build tasks
@@ -27,6 +28,12 @@ var opts = {
     transform: [ uglifyify ]
   }
 }
+
+// NOTE(jordan): move images to dist
+gulp.task('images', function () {
+  return gulp.src(path.images)
+    .pipe(gulp.dest(dest.base))
+})
 
 // NOTE(jordan): utility function for adding inline sourcemaps to a build
 function withSourcemaps (stream, pipefn) {
