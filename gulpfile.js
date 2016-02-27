@@ -9,6 +9,7 @@ var bifywify  = require('bify-wify')
 var path = {
   base: 'src',
   js: 'src/js/index.js',
+  jsall: 'src/js/**/*.js',
   stylus: 'src/stylus/main.styl',
   jade: 'src/**/*.jade',
 }
@@ -59,12 +60,13 @@ gulp.task('build:jade', function () {
 gulp.task('build:dev', [ 'build:js', 'build:stylus', 'build:jade' ])
 
 gulp.task('watch:js', function () {
-  bifywify.fwify('src/index.js', 'app.bundle.js', opts.bify)
+  bifywify.fwify('index.js', 'app.bundle.js', opts.bify)
 })
 
-gulp.task('watch:all', [ 'build:dev', 'watch:js' ], function () {
-  gulp.watch(path.stylus, [ 'build:stylus' ])
+gulp.task('watch:all', [ 'build:dev' ], function () {
+  gulp.watch('src/stylus/**/*.styl', [ 'build:stylus' ])
   gulp.watch(path.jade, [ 'build:jade' ])
+  gulp.watch('src/js/**/*.js', [ 'build:js' ]).on('change', browserSync.reload)
 
   gulp.watch('dist/*.{html,js}').on('change', browserSync.reload)
 })
