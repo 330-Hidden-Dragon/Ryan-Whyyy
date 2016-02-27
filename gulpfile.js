@@ -9,7 +9,7 @@ var bifywify  = require('bify-wify')
 var path = {
   base: 'src',
   js: 'src/js/index.js',
-  stylus: 'src/stylus/**/*.styl',
+  stylus: 'src/stylus/main.styl',
   jade: 'src/**/*.jade',
 }
 
@@ -41,7 +41,10 @@ gulp.task('build:js', function () {
 gulp.task('build:stylus', function () {
   return withSourcemaps(
       gulp.src(path.stylus),
-      $.stylus()
+      $.stylus({
+        compress: true,
+        'include css': true
+      })
     ).pipe(gulp.dest(dest.stylus))
     .pipe(browserSync.stream())
 })
@@ -49,7 +52,7 @@ gulp.task('build:stylus', function () {
 gulp.task('build:jade', function () {
   return withSourcemaps(
       gulp.src(path.jade),
-      $.jade({ pretty: true })
+      $.jade()
     ).pipe(gulp.dest(dest.base))
 })
 
