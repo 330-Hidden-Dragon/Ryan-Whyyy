@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/330-hidden-dragon/ryan-whyyy#readme",
   "dependencies": {
+    "classy-js": "^2.1.0",
     "pouchdb": "^5.2.1"
   },
   "devDependencies": {
