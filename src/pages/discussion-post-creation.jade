@@ -1,13 +1,13 @@
-doctype html
-html
-  head
-    title Create a Discussion Post
-    link(rel='stylesheet', href='../css/main.css', type='text/css')
-  body
-    form.column.twelve
-      h1.column.twelve.last Create Discussion Post
-      input.column.twelve.buffer(type="text", placeholder="Post Title")
-      textarea.column.twelve.clear.buffer(type="text", placeholder="Discussion content here")
-      .column.twelve
-        button.column.fourth.push-six.buffer Video
-        button.column.fourth.last.buffer Submit
+extends ../layout
+
+block head
+  title Create a Discussion Post
+
+block body
+  form.column.twelve
+    h1.column.twelve.last Create Discussion Post
+    input.column.twelve.buffer(type="text", placeholder="Post Title")
+    textarea.column.twelve.clear.buffer(type="text", placeholder="Discussion content here")
+    .column.twelve
+      button.column.fourth.push-six.buffer Video
+      button.column.fourth.last.buffer Submit
