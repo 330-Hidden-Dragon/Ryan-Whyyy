@@ -6,12 +6,13 @@ html
     link(rel='stylesheet', href='css/main.css', type='text/css')
   body
     div.column.twelve(class = 'pg-bgnd')
-      div.column.ten(class = 'header' id = 'home-top-bar') Trending
-      div.column.one.inline.plain(id = 'srch-btn') O=
-      div.column.twelve(class = 'issue-bgnd-1')
+      div.column.twelve.header.anchored(id = 'home-top-bar') Trending
+        div.column.twelve.last.plain(id = 'srch-btn') O=
+      div.column.twelve.issue-block(id = 'issue-block-1')
         p.column.twelve(class = 'issue-title') Example Issue
-        video(class = 'issue-vid' width="854" height="400")
+        video.column.twelve(class = "vid" class = 'issue-vid' width="854" height="400")
           source(src="https://www.youtube.com/embed/3K1jpOrTI44" type="video/mp4")
+        p.column.twelve(class = 'issue-desc') Example issue description guyz this is important
       div.column.twelve.push-ten.last.plain(class='post-btn' id='post-issue') Post
         
         
