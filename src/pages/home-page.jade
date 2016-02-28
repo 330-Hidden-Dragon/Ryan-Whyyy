@@ -1,0 +1,22 @@
+extends ../layout
+
+block head
+    title Hidden Dragon
+
+block body
+    div.column.eleven.header.anchored(id = 'home-top-bar')
+      div.column.eleven.title Home
+      button.column.one.inline.last#srch-btn
+        i.fa.fa-search
+    
+    div.column.twelve.pg-bgnd
+      div.column.twelve.last.post
+        p.column.twelve.issue-title Example Issue
+        iframe.twelve.vid.issue-vid(width="854", height="480", src="https://www.youtube.com/embed/3K1jpOrTI44", frameborder="0")
+        p.column.twelve.issue-desc Example issue description guyz this is important
+      button.column.one.push-ten.last.post-btn#post-issue
+        i.fa.fa-plus
+        
+        
+          
+        
