@@ -4,8 +4,13 @@ block head
   title Create a Discussion Post
 
 block body
+  ul.nav-bar
+    a(href="")
+      li.column.one.inline-block
+        i(class="fa fa-chevron-left")
+    li.column.ten.inline-block Create Discussion Post
+    
   form.column.twelve
-    h1.column.twelve.last Create Discussion Post
     input.column.twelve.buffer(type="text", placeholder="Post Title")
     textarea.column.twelve.clear.buffer(type="text", placeholder="Discussion content here")
     .column.twelve
