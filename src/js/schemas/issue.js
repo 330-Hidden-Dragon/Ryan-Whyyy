@@ -5,8 +5,11 @@ var issue = Schema({
   id: Number,
   author: Number, // user id
   title: String,
-  video: String, // url
   description: String,
+  video: Schema({
+    external: Boolean,
+    url: String,
+  }),
 })
 
-module.exports = Model(issue)
+module.exports = Issue = Model(issue)

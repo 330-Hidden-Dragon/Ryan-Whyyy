@@ -5,9 +5,10 @@ var Schema = module.exports = function (schema) {
       value = instance[name]
       type  = schema[name]
 
-      return value instanceof type
-             || (type instanceof Function && typeof value === typeof type())
-             || typeof value === type
+      return (type instanceof Function && (value instanceof type
+                || type(value)
+                || typeof value === typeof type()))
+             || (typeof type === 'string' && typeof value === type)
              || (type.isInstance instanceof Function && type.isInstance(value))
     })
 
