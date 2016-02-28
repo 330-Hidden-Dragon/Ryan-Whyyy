@@ -4,6 +4,7 @@ var Model  = require('./classy.model.js')
 var issue = Schema({
   id: Number,
   author: Number, // user id
+  author_image: String, // profile image
   title: String,
   description: String,
   video: Schema({
