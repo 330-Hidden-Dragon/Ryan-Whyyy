@@ -4,15 +4,15 @@ block head
   title Post an Issue
 
 block body
-  ul.nav-bar
-    a(href="")
-      li.column.one.inline-block
-        i(class="fa fa-chevron-left")
-    li.column.ten.inline-block Create an Issue
-    
+
   header.column.twelve
-    form.column.twelve
-      .main
+    ul.nav-bar
+      a(href="")
+        li.column.one.inline-block
+          i.fa.fa-chevron-left
+      li.column.ten.inline-block Create an Issue
+    form.issue-form.column.twelve
+      .top
         label.column.three Title
         input.plain.column.nine.last(type='text')
 
