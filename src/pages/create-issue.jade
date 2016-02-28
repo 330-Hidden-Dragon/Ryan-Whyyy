@@ -1,0 +1,24 @@
+extends ../layout
+
+block head
+  title Post an Issue
+
+block body
+  header.column.twelve
+    form.columen.twelve
+      .main
+        h3 Create an Issue
+        label.column.three Title
+        input.plain.column.nine.last(type='text')
+
+        textarea.plain.column.twelve.last
+          | Description...
+
+      #video-upload
+        p.placeholder.column.twelve your video will go here :)
+        video.column.twelve.last(autoplay)
+        button.plain.video-upload-btn
+          .inner-btn
+      
+      // NOTE(jordan) temporarily hidden because not yet styled/ready
+      button.plain.submit-btn.hidden
