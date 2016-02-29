@@ -39,15 +39,11 @@ module.exports = function () {
     evt.preventDefault()
     evt.stopPropagation()
 
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia(mediaRequests)
-        .then(captureStream)
-        .catch(error)
-    } else if (navigator.getUserMedia) {
-      navigator.getUserMedia(navigator, mediaRequests, captureStream, error)
-    }
+    (navigator.getUserMedia
+      || navigator.webkitGetUserMedia
+      || navigator.mozGetUserMedia).call(navigator, mediaRequests, captureStream, error)
   }
-  
+
   function captureStream (stream) {
     console.log('begin recording')
 
