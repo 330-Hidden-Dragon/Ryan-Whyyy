@@ -164,7 +164,7 @@ button
     padding-top post-padding - post-border-size
     padding-bottom post-padding + post-border-size
 
-    .video:hover
+    .video:active
       margin-left -1 * post-padding - base-padding-h
       width 'calc(100% + %s)' % ((post-padding + base-padding-h + post-border-size) * 2)
 
@@ -205,12 +205,12 @@ button
       z-index 0
       cursor pointer
 
-    &:hover, &.playing
+    &:active, &.playing
       margin-left -1 * post-padding - base-padding-h
       width 'calc(100% + %s)' % ((post-padding + base-padding-h + post-border-size) * 2)
 
       iframe, video
         border-radius 0
 
-    &:hover
+    &:active
       width 'calc(100% + %s)' % ((post-padding + base-padding-h) * 2)
