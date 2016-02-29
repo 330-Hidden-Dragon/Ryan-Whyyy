@@ -1,4 +1,5 @@
 var homeController = require('./controllers/home')
+  , issueController = require('./controllers/issue')
   , createIssueController = require('./controllers/create-issue')
 
 var router = { }
@@ -16,6 +17,9 @@ router.load = function () {
   switch(currentPage) {
     case 'home-page':
       homeController()
+      break
+    case 'issue':
+      issueController()
       break
     case 'create-issue':
       createIssueController()
