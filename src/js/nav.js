@@ -2,9 +2,10 @@ module.exports = function () {
   var q1   = require('./qq').q1
     , util = require('./util')
 
-  var searchBar = q1('.search-bar')
+  var searchBar    = q1('.search-bar')
     , searchToggle = q1('.search-btn')
-    , searchBtn = q1('.inner-search-btn')
+    , searchBtn    = q1('.inner-search-btn')
+    , backBtn      = q1('.back-btn')
 
   if (searchBar) {
     util.togglePlaceholder(searchBar)
@@ -20,6 +21,12 @@ module.exports = function () {
     })
     searchBtn.addEventListener('click', function () {
       alert('You search for the thing!')
+    })
+  }
+
+  if (backBtn) {
+    backBtn.addEventListener('click', function () {
+      window.history.back()
     })
   }
 }
