@@ -9,15 +9,31 @@ block vars
 block nav
   p.fade.column.eleven Viva Voce
   i.fa.fa-search.btn.search-btn.column.one.last
+    input(type='text', value='What are you looking for?').plain.search-bar
+    i.fa.fa-search.inner-search-btn
+
+mixin post(title, videoType, source, description, active)
+  .post(class='#{active ? "active" : ""}')
+    a(href='./issue.html?issue=' + title.toLowerCase().replace(/ /g, '_'))
+      h2.title=title
+    .video(class='#{active ? "playing" : ""}')
+      .click-capture
+      - if (videoType === 'iframe') {
+        iframe(
+          height="300",
+          src!=source + (active ? '?autoplay=1' : ''),
+          frameborder="0"
+          )
+      - } else {
+        video(src!=source)
+      - }
+    p.description
+      != description
 
 block body
-  .post
-    h2.title Example Issue
-    .video
-      iframe(
-        height="300",
-        src="https://www.youtube.com/embed/3K1jpOrTI44",
-        frameborder="0"
-        )
-    p.description
-      | Example issue description guyz this is important
+  +post('Example Post', 'iframe', 'https://www.youtube.com/embed/3K1jpOrTI44', 'Example issue description', true)
+  +post('Another example', 'video', '/', 'Some descriptive text fdjskaljflkds fjdskl jfkdsa jl jfdks jkfdsj kjf ksj kfjdsk jf ksdj fksjk fjksfjkja fkdj kjfk sjk jk fdksja kfjksjak fkdsjakfj ksjk afjdskl')
+  +post('A third example', 'video', '/', 'Some descriptive text')
+  
+  a(href='/create-issue.html')
+    button.plain.new-btn +

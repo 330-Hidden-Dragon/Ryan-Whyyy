@@ -1,70 +1,81 @@
-header.create-issue
-  height 100%
+body.create-issue
+  padding 0
 
-  form.issue-form
-    height calc(100% - 50px)
+  header
+    height 100%
 
-    .top
-      padding 50px
-      height 35%
+    form.issue-form
+      height 100%
+      font-size readable-font-size
 
-      h3
-       margin-top 0
-       text-align center
+      .top
+        padding 0 25px
+        height 35%
+        padding-top 10px
 
-      input, textarea
-        border-bottom 2px solid rgba(0,0,0,0.25)
+        input
+          position relative
+          top -10px
 
-        transition ease 0.3s all
+        input, textarea
+          padding 10px
+          border-bottom 2px solid darken(primary, 20%)
+          font-weight 400
 
-        &:focus
-          border-color accent
+          transition ease 0.3s all
 
-      textarea
-        margin-top 10px
+          &:focus
+            border-color secondary
+            background darken(primary, 10%)
 
-    #video-upload
-      position relative
+        textarea
+          width 'calc(100% - %s)' % 20px
+          margin 20px 0
+          max-height 120px
 
-      height 65%
-
-      background #555
-
-      video
-        height 100%
-
-      p.placeholder
-        position absolute
-
-        top 20%
-
-        font-size 30px
-        color rgba(255, 255, 255, 0.33)
-
-        text-align center
-
-      .video-upload-btn
+      #video-upload
         position relative
-        top -100px
 
-        display block
+        height 65%
 
-        height 50px
-        width 50px
+        background #555
 
-        margin 0 auto
+        video
+          height 100%
+          object-fit cover
 
-        background white
+        p.placeholder
+          position absolute
 
-        border-radius 25px
-        box-shadow 2px 2px 5px rgba(0,0,0,0.5)
+          top 20%
 
-        .inner-btn
-          width 36px
-          height 36px
+          font-size 30px
+          color rgba(255, 255, 255, 0.33)
+
+          text-align center
+
+        .video-upload-btn
+          position relative
+          top -100px
+
+          display block
+
+          height 50px
+          width 50px
 
           margin 0 auto
 
-          background #ee3333
+          background white
 
-          border-radius 18px
+          border-radius 25px
+          box-shadow 2px 2px 5px rgba(0,0,0,0.5)
+
+          .inner-btn
+            width 36px
+            height 36px
+
+            margin 0 auto
+
+            background #ee3333
+
+            border-radius 18px

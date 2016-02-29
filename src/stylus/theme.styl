@@ -10,10 +10,53 @@
   cursor pointer
 
 .search-btn
+  .inner-search-btn
+    position absolute
+
+    top nav-padding-h + 8px
+    left nav-padding-h
+
+    max-width 0
+    overflow hidden
+
+    transition max-width ease 0.5s, left ease 0.5s
+
   .search-bar
+    position absolute
+    z-index 0
+
     width 0
 
+    top 0
+    left 0
+
+    margin 10px
+    padding 10px 0
+
+    background lighten(primary, 10%)
+
+    border-radius 50px
+
+    font-family base-font-family
+    font-size base-font-size
+
+    color secondary
+
+    transition ease 0.5s width, ease 0.5s padding
+
+  &:hover, &.active
+    .search-bar
+      width 'calc(100% - %s)' % (base-padding-h * 2 + 20px)
+      padding 10px 20px
+
+    .inner-search-btn
+      max-width 100%
+      left 'calc(100% - %s)' % (nav-padding-h + base-padding-h * 2)
+
 body
+  height 'calc(100% - %s)' % nav-height
+
+  margin-top nav-height
   padding base-padding
 
   color secondary
@@ -23,13 +66,33 @@ body
   font-size base-font-size
   font-weight 600
 
+a
+  color inherit
+  text-decoration none
+  transition color ease 0.1s
+
+  &:visited
+    color inherit
+
+  &:active
+    color inherit
+
 nav
+  position fixed
+  z-index 2
+  top 0
+  left 0
+
+  background primary
+
   height nav-height
 
-  margin-bottom nav-spacing
-  padding nav-padding
+  padding nav-padding-v (nav-padding-h + base-padding-h)
 
   font-size (base-font-size + nav-font-mod)
+
+  p
+    line-height 0.9em
 
 button
   height 60px
@@ -42,9 +105,33 @@ button
   border-radius 30px
   border-style solid
 
+  &[disabled]
+    opacity 0.5
+
+  &.new-btn
+    position fixed
+    z-index 1
+
+    font-size base-font-size + 15px
+    font-weight 400
+
+    bottom 20px
+    right 20px
+
+    width 50px
+    height 50px
+
+    border-radius 25px
+
+    background lighten(primary, 10%)
+    box-shadow 2px 2px 5px rgba(0,0,0,0.5)
+
 .post
   position relative
+  z-index 1
   padding post-padding
+
+  margin-bottom 20px
 
   background-color secondary
   color base-font-color
@@ -58,6 +145,7 @@ button
 
   &:after
     content ''
+    pointer-events none
     position absolute
     top 0
     left post-border-size
@@ -68,10 +156,14 @@ button
 
     transition border-width ease 0.2s, top ease 0.2s, left ease 0.2s, height ease 0.2s
 
-  &:hover, &.active
+  &.active
     padding-right post-padding + post-border-size
     padding-top post-padding - post-border-size
     padding-bottom post-padding + post-border-size
+
+    .video:hover
+      margin-left -1 * post-padding - base-padding-h
+      width 'calc(100% + %s)' % ((post-padding + base-padding-h + post-border-size) * 2)
 
     &:after
       height 'calc(100% - %s)' % post-border-size
@@ -85,18 +177,30 @@ button
 
   .description
     padding post-description-padding
+    font-weight 400
 
   .video
+    position relative
+    z-index 1
+
     width 100%
+    height 350px
     margin-left 0
 
     transition width ease 0.3s, margin-left ease 0.3s
 
     iframe, video
       border-radius 5px
-
-      position relative
-      z-index 1
+      height 100%
+      width 100%
+    iframe
+      z-index -1
+    .click-capture
+      position absolute
+      width 100%
+      height 100%
+      z-index 0
+      cursor pointer
 
     &:hover, &.playing
       margin-left -1 * post-padding - base-padding-h
@@ -104,3 +208,6 @@ button
 
       iframe, video
         border-radius 0
+
+    &:hover
+      width 'calc(100% + %s)' % ((post-padding + base-padding-h) * 2)

@@ -2,6 +2,8 @@ doctype html
 html
   head
     block head
+    
+    meta(name='viewport', content='width=device-width,initial-scale=1')
     link(rel='stylesheet', href='/css/main.css', type='text/css')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', type='text/css')
     
@@ -9,9 +11,8 @@ html
     block vars
     
   body(class='#{bodyClass}')
-    header
-      nav.column.twelve
-        block nav
+    nav.column.twelve.fixed-top
+      block nav
 
     block body
     

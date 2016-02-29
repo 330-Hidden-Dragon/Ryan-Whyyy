@@ -1,6 +1,7 @@
 
 var RecordRTC = require('recordrtc')
-  , q1        = require('../qq.js').q1
+  , util      = require('../util')
+  , q1        = require('../qq').q1
 
 module.exports = function () {
   var mediaRequests = { audio: true, video: true }
@@ -11,16 +12,7 @@ module.exports = function () {
     , recorder
     , listenerId
 
-  description.addEventListener('focus', function () {
-    if (description.value === description.textContent)
-      description.value  = ''
-  })
-
-  description.addEventListener('blur', function () {
-    if (description.value.length === 0) {
-      description.value = description.textContent
-    }
-  })
+  util.togglePlaceholder(description)
 
   function stopRecording () {
     recorder.stopRecording(function (videoUrlObject) {

@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,600,800')
 @import '../../vendor/css/layers.css'
+@import '_colors'
+@import '_vars'
 
 // NOTE(jordan): general styles, additional resets
 
@@ -12,15 +14,11 @@ h1, h2, h3, h4, h5, h6
 p
   margin 0
   padding 0
-  line-height 0.9em
 
 input[type="text"], textarea
   max-width 100%
 
 // NOTE(jordan): order of imports is important; these can override the above now
-@import '_colors'
-@import '_vars'
 @import 'theme.styl'
-@import 'pages/home-page.styl'
 @import 'pages/discussion-post.styl'
 @import 'pages/create-issue.styl'
