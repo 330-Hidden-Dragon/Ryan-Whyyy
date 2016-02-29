@@ -5,8 +5,14 @@ var q1 = require('../qq').q1
 module.exports = function () {
   var posts   = [].slice.call(qq('.post'))
     , videos  = [].slice.call(qq('.post .video'))
+    , create  = q1('.new-btn')
 
   youtube.init(videos, setupVideos)
+
+  create.addEventListener('click', function () {
+    console.log('redirect to create-issue')
+    window.location.pathname = '/create-issue.html'
+  })
 
   window.addEventListener('scroll', function () {
     posts.forEach(function (post, idx) {
@@ -21,7 +27,7 @@ module.exports = function () {
         post.classList.add('active')
         if (!post._clicked) {
           video.classList.add('playing')
-          youtube.togglePlaying(videoFrame)
+          youtube.play(videoFrame)
         }
       } else {
         post.classList.remove('active')

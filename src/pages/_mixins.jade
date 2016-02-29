@@ -1,6 +1,8 @@
 mixin post(title, videoType, source, description, active)
-  .post(class='#{active ? "active" : ""}')
-    a(href='./issue.html?issue=' + title.toLowerCase().replace(/ /g, '_'))
+  .post(class='#{active ? "active" : ""}')&attributes(attributes)
+    - var data = [ title, source, description ].map(encodeURIComponent)
+    - var query = '?title=' + data[0] + '&video=' + data[1] + '&description=' + data[2]
+    a(href='./issue.html' + query)
       h2.title=title
     .video(class='#{active ? "playing" : ""}')
       .click-capture
@@ -14,7 +16,7 @@ mixin post(title, videoType, source, description, active)
       - } else {
         video(src!=source)
       - }
-    a(href='./issue.html?issue=' + title.toLowerCase().replace(/ /g, '_'))
+    a(href='./issue.html' + query)
       p.description
         != description
 

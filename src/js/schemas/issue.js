@@ -6,10 +6,7 @@ var issue = Schema({
   author: Number, // user id
   title: String,
   description: String,
-  video: Schema({
-    external: Boolean,
-    url: String,
-  }),
+  video: String   // url
 })
 
 module.exports = Issue = Model(issue)
