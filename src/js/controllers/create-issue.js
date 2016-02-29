@@ -9,6 +9,10 @@ module.exports = function () {
     , video         = q1('video')
     , placeholder   = q1('p.placeholder')
     , description   = q1('textarea')
+    , title         = q1('input')
+    , submitBtn     = q1('.new-btn')
+    , hasUserMedia  = false
+    , streamURLObject
     , recorder
     , listenerId
 
@@ -57,5 +61,37 @@ module.exports = function () {
       || navigator.getUserMedia).call(navigator, mediaRequests,
         startRecording,
         error)
+  })
+
+  var requiredFields = [ title, description, video ]
+
+  ;[ title, description ].forEach(function (field) {
+    field.addEventListener('change', function (evt) {
+      if (requiredFields.every(function (f) {
+        return (f.value && f.value.length > 0 && f.value !== f.textContent)
+               || (f.src !== undefined && f.src !== '')
+      })) {
+        submitBtn.disabled = false
+      } else {
+        submitBtn.disabled = true
+      }
+    })
+  })
+
+  recordBtn.addEventListener('click', function () {
+    if (requiredFields.every(function (f) {
+      return (f.value && f.value.length > 0 && f.value !== f.textContent)
+             || (f.src !== undefined && f.src !== '')
+    })) {
+      submitBtn.disabled = false
+    } else {
+      submitBtn.disabled = true
+    }
+  })
+
+  submitBtn.addEventListener('click', function (evt) {
+    evt.preventDefault()
+    evt.stopPropagation()
+    console.log('create issue')
   })
 }
