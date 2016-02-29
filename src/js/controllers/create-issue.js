@@ -39,7 +39,7 @@ module.exports = function () {
     evt.preventDefault()
     evt.stopPropagation()
 
-    (navigator.getUserMedia
+    ;(navigator.getUserMedia
       || navigator.webkitGetUserMedia
       || navigator.mozGetUserMedia).call(navigator, mediaRequests, captureStream, error)
   }
