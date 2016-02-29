@@ -4,7 +4,6 @@ var q1 = require('../qq').q1
 module.exports = function () {
   var posts   = [].slice.call(qq('.post'))
     , videos  = [].slice.call(qq('.post .video'))
-    , iframes = [].slice.call(qq('.post .video iframe'))
 
   window.addEventListener('scroll', function () {
     posts.forEach(function (post, idx) {
@@ -22,7 +21,6 @@ module.exports = function () {
       } else {
         post.classList.remove('active')
         videos[idx].classList.remove('playing')
-        console.log(videos[idx].children[1].tagName)
         if (videos[idx].children[1].tagName === 'IFRAME') {
           if (~videos[idx].children[1].src.indexOf('?')) {
             videos[idx].children[1].src = videos[idx].children[1].src.split('?')[0]
@@ -38,10 +36,12 @@ module.exports = function () {
       evt.stopPropagation()
       video.classList.toggle('playing')
       video.parentElement._clicked = true
-      if (video.classList.contains('playing'))
-        iframes[idx].src += '?autoplay=1'
-      else
-        iframes[idx].src = iframes[idx].src.split('?')[0]
+      if (video.children[1].tagName === 'IFRAME') {
+        if (video.classList.contains('playing'))
+          video.children[1].src += '?autoplay=1'
+        else
+          video.children[1].src = video.children[1].src.split('?')[0]
+      }
     })
   })
 }
