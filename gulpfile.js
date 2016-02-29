@@ -80,7 +80,9 @@ gulp.task('watch:all', [ 'build:dev' ], function () {
 
 gulp.task('serve', function () {
   browserSync.init({
-    server: 'dist'
+    server: {
+      baseDir: [ 'dist', 'dist/pages' ],
+    }
   })
 })
 
