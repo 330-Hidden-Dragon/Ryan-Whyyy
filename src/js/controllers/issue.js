@@ -1,18 +1,45 @@
-var q1 = require('../qq').q1
+var qq = require('../qq').qq
+  , q1 = require('../qq').q1
+  , youtube = require('../youtube')
 
 module.exports = function () {
-  var video = q1('.video')
+  var videos = [].slice.call(qq('.video'))
+    , discuss = q1('.discuss-btn')
+    , support = q1('.support-btn')
 
-  video.addEventListener('click', function (evt) {
-    evt.preventDefault()
-    evt.stopPropagation()
+  var selflinks = qq('a[href*="' + window.location.pathname + '"]')
+
+  ;[].forEach.call(selflinks, function (selflink) {
+    selflink.addEventListener('click', function (evt) {
+      evt.preventDefault()
+      evt.stopPropagation()
+      return false
+    })
+  })
+
+  youtube.init(videos, setupVideos)
+
+  function setupVideos () {
+    var video = videos[0]
+      , videoFrame = video.children[1]
+
     video.classList.toggle('playing')
-    video.parentElement._clicked = true
-    if (video.children[1].tagName === 'IFRAME') {
-      if (video.classList.contains('playing'))
-        video.children[1].src += '?autoplay=1'
-      else
-        video.children[1].src = video.children[1].src.split('?')[0]
-    }
+    youtube.play(videoFrame)
+
+    video.addEventListener('click', function (evt) {
+      evt.preventDefault()
+      evt.stopPropagation()
+      video.classList.toggle('playing')
+      video.parentElement._clicked = true
+      youtube.togglePlaying(videoFrame)
+    })
+  }
+
+  discuss.addEventListener('click', function () {
+    alert('Ok, now you can go to the discuss page, except we don\'t have one')
+  })
+
+  support.addEventListener('click', function () {
+    alert('Your support is much appreciated!')
   })
 }

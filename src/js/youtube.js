@@ -17,8 +17,8 @@ youtube.init = function init (videos, onReady) {
 }
 
 youtube.togglePlaying = function togglePlaying (videoFrame) {
-  console.log('TOGGLE PLAYING', videoFrame)
   if (videoFrame.ytPlayer) {
+    console.log('TOGGLE PLAYING', videoFrame)
     if (videoFrame.ytPlayer.getPlayerState() === YT.PlayerState.PLAYING)
       videoFrame.ytPlayer.pauseVideo()
     else

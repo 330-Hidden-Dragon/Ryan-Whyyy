@@ -1,4 +1,27 @@
 body.issue
-  .video:hover, .video.playing
+  .video:active, .video.playing
     margin-left -1 * post-padding - base-padding-h
     width 'calc(100% + %s)' % ((post-padding + base-padding-h) * 2 + post-border-size)
+
+  .support-btn, .discuss-btn
+    font-size readable-font-size
+    height 120px
+    overflow hidden
+    border-radius 0
+
+  .support-btn
+    text-align left
+    p
+      padding-left 15px
+    img
+      height 100px
+
+  .discuss-btn
+    text-align right
+
+    p
+      padding-right 15px
+      margin-bottom -15px
+    i
+      font-size 120px
+      height 100px

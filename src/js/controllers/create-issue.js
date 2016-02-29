@@ -39,33 +39,39 @@ module.exports = function () {
     evt.preventDefault()
     evt.stopPropagation()
 
-    ;(navigator.mediaDevices.getUserMedia
-      || navigator.getUserMedia).call(navigator, mediaRequests,
-        function (stream) {
-      console.log('begin recording')
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia(mediaRequests)
+        .then(captureStream)
+        .catch(error)
+    } else if (navigator.getUserMedia) {
+      navigator.getUserMedia(navigator, mediaRequests, captureStream, error)
+    }
+  }
+  
+  function captureStream (stream) {
+    console.log('begin recording')
 
-      // NOTE(jordan): show stream while recording
-      if (!streamView.src)
-        streamView.src = URL.createObjectURL(stream)
+    // NOTE(jordan): show stream while recording
+    if (!streamView.src)
+      streamView.src = URL.createObjectURL(stream)
 
-      // NOTE(jordan): set up RecordRTC
-      recorder = RecordRTC(stream, {
-        mimeType: 'video/webm',
-        bitsPerSecond: 128000
-      })
+    // NOTE(jordan): set up RecordRTC
+    recorder = RecordRTC(stream, {
+      mimeType: 'video/webm',
+      bitsPerSecond: 128000
+    })
 
-      // NOTE(jordan): hide placeholder
-      placeholder.style.display = 'none'
+    // NOTE(jordan): hide placeholder
+    placeholder.style.display = 'none'
 
-      recordedView.style.zIndex = 0
-      recordedView.controls = false
+    recordedView.style.zIndex = 0
+    recordedView.controls = false
 
-      // NOTE(jordan): start RecordRTC
-      recorder.startRecording()
-      // NOTE(jordan): change its click handler to stop the recording
-      recordBtn.removeEventListener('click', startRecording)
-      recordBtn.addEventListener('click', stopRecording)
-    }, error)
+    // NOTE(jordan): start RecordRTC
+    recorder.startRecording()
+    // NOTE(jordan): change its click handler to stop the recording
+    recordBtn.removeEventListener('click', startRecording)
+    recordBtn.addEventListener('click', stopRecording)
   }
 
   function error (error) {

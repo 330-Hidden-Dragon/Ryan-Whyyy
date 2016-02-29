@@ -19,7 +19,8 @@ var path = {
 var dest = {
   base: 'dist',
   js: 'js/app.bundle.js',
-  stylus: 'dist/css'
+  stylus: 'dist/css',
+  images: 'dist/images'
 }
 
 // NOTE(jordan): other global opts, by task
@@ -32,7 +33,7 @@ var opts = {
 // NOTE(jordan): move images to dist
 gulp.task('images', function () {
   return gulp.src(path.images)
-    .pipe(gulp.dest(dest.base))
+    .pipe(gulp.dest(dest.images))
 })
 
 // NOTE(jordan): utility function for adding inline sourcemaps to a build

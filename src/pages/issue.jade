@@ -14,8 +14,12 @@ block nav
   
 block body
   +post('Some issue', 'iframe', 'https://www.youtube.com/embed/BZmeZyDGkQ0', 'San Bernadino apple encryption Tim Cook oh my')
-  button.column.two Support
-  button.column.two.last Something
+  button.support-btn.column.six
+    p.column.twelve.last support
+    img.last(src='/images/fist-icon.png')
+  button.discuss-btn.column.six.last
+    p.column.twelve.last discuss
+    i.fa.fa-comments.column.twelve.last
 
 block scripts
   script(src='https://www.youtube.com/iframe_api')
