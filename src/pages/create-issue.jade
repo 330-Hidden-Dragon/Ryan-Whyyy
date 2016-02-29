@@ -1,5 +1,7 @@
 extends ../layout
 
+include _mixins
+
 block head
   title Post an Issue
 
@@ -7,7 +9,7 @@ block vars
   - bodyClass = 'create-issue'
 
 block nav
-  i.fa.fa-chevron-left.column.one
+  +back-btn()
   p.column.eleven.last Post an Issue
 
 block body

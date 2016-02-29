@@ -1,12 +1,18 @@
 extends ../layout
 
+include _mixins
+
 block head
   title Issue Page
 
+block vars
+  - bodyClass = 'issue'
+
 block nav
-  i.fa.fa-chevron-left.column.one
+  +back-btn()
   p.column.eleven.last Issue issue issue
   
 block body
+  +post('Some issue', 'iframe', 'https://www.youtube.com/embed/BZmeZyDGkQ0', 'San Bernadino apple encryption Tim Cook oh my')
   button.column.two Support
   button.column.two.last Something

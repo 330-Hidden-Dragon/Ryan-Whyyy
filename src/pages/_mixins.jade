@@ -1,0 +1,21 @@
+mixin post(title, videoType, source, description, active)
+  .post(class='#{active ? "active" : ""}')
+    a(href='./issue.html?issue=' + title.toLowerCase().replace(/ /g, '_'))
+      h2.title=title
+    .video(class='#{active ? "playing" : ""}')
+      .click-capture
+      - if (videoType === 'iframe') {
+        iframe(
+          height="300",
+          src!=source + (active ? '?autoplay=1' : ''),
+          frameborder="0"
+          )
+      - } else {
+        video(src!=source)
+      - }
+    a(href='./issue.html?issue=' + title.toLowerCase().replace(/ /g, '_'))
+      p.description
+        != description
+
+mixin back-btn()
+  i.fa.fa-chevron-left.back-btn.btn.column.one
