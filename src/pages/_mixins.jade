@@ -7,8 +7,9 @@ mixin post(title, videoType, source, description, active)
       - if (videoType === 'iframe') {
         iframe(
           height="300",
-          src!=source + (active ? '?autoplay=1' : ''),
-          frameborder="0"
+          src!=source + '?enablejsapi=1',
+          frameborder="0",
+          allowfullscreen
           )
       - } else {
         video(src!=source)
