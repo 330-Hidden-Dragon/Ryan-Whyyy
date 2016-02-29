@@ -1,18 +1,106 @@
+// NOTE(jordan): styles shared across many pages
+.fade
+  transition opacity 0.2s ease
+  opacity 0.8
+
+  &:hover
+    opacity 1
+
+.btn
+  cursor pointer
+
+.search-btn
+  .search-bar
+    width 0
+
+body
+  padding base-padding
+
+  color secondary
+  background-color primary
+
+  font-family base-font-family
+  font-size base-font-size
+  font-weight 600
+
+nav
+  height nav-height
+
+  margin-bottom nav-spacing
+  padding nav-padding
+
+  font-size (base-font-size + nav-font-mod)
+
 button
-  color white
-  background-color #22ccc0
   height 60px
   width 60px
+
+  color secondary
+  background-color primary
+
   border-width 0px
   border-radius 30px
   border-style solid
 
-.pg-bgnd
-  background-color white
-
 .post
-  background-color white
-  border-width 3px
-  border-color #22ccc0
-  border-style solid
-  border-radius 20px
+  position relative
+  padding post-padding
+
+  background-color secondary
+  color base-font-color
+
+  border solid darken(primary, 10%)
+  border-width 0 post-border-size post-border-size 0
+  border-top-left-radius 5px
+  border-bottom-right-radius 5px
+
+  transition padding-right ease 0.2s, padding-top ease 0.2s, padding-bottom ease 0.2s
+
+  &:after
+    content ''
+    position absolute
+    top 0
+    left post-border-size
+    z-index 0
+    width 'calc(100% - %s)' % post-border-size
+    height 100%
+    border 0 solid darken(secondary, 10%)
+
+    transition border-width ease 0.2s, top ease 0.2s, left ease 0.2s, height ease 0.2s
+
+  &:hover, &.active
+    padding-right post-padding + post-border-size
+    padding-top post-padding - post-border-size
+    padding-bottom post-padding + post-border-size
+
+    &:after
+      height 'calc(100% - %s)' % post-border-size
+      top 0
+      left 0
+      border-width 0 post-border-size post-border-size 0
+
+  .title
+    text-align center
+    padding post-title-padding
+
+  .description
+    padding post-description-padding
+
+  .video
+    width 100%
+    margin-left 0
+
+    transition width ease 0.3s, margin-left ease 0.3s
+
+    iframe, video
+      border-radius 5px
+
+      position relative
+      z-index 1
+
+    &:hover, &.playing
+      margin-left -1 * post-padding - base-padding-h
+      width 'calc(100% + %s)' % ((post-padding + base-padding-h + post-border-size) * 2)
+
+      iframe, video
+        border-radius 0

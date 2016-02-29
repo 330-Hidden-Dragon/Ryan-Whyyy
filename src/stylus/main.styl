@@ -1,31 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,600,800')
 @import '../../vendor/css/layers.css'
-@import 'home-page.styl'
-@import 'discussion-post.styl'
-@import 'create-issue.styl'
-@import 'theme.styl'
 
-html, body
-  margin 0
-  padding 0
-  height 100%
-
-body
-  font-size 20px
-  font-family Raleway, helvetica, arial, sans-serif
+// NOTE(jordan): general styles, additional resets
 
 *
   box-sizing border-box
 
+h1, h2, h3, h4, h5, h6
+  margin 0
+
+p
+  margin 0
+  padding 0
+  line-height 0.9em
+
 input[type="text"], textarea
   max-width 100%
 
-ul.nav-bar
-  list-style-type none
-  margin 0
-  padding 0
-  overflow hidden
-  background-color #22ccc0
-  color white
-  font-size: 35px
-  height 50px
+// NOTE(jordan): order of imports is important; these can override the above now
+@import '_colors'
+@import '_vars'
+@import 'theme.styl'
+@import 'pages/home-page.styl'
+@import 'pages/discussion-post.styl'
+@import 'pages/create-issue.styl'
