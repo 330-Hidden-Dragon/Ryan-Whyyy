@@ -6,7 +6,8 @@ var RecordRTC = require('recordrtc')
 module.exports = function () {
   var mediaRequests = { audio: true, video: true }
     , recordBtn     = q1('.video-upload-btn')
-    , video         = q1('video')
+    , streamView    = q1('video.streaming')
+    , recordedView  = q1('video.stored')
     , placeholder   = q1('p.placeholder')
     , description   = q1('textarea')
     , title         = q1('input')
@@ -18,34 +19,53 @@ module.exports = function () {
 
   util.togglePlaceholder(description)
 
-  function stopRecording () {
+  function stopRecording (evt) {
+    evt.preventDefault()
+    evt.stopPropagation()
+    console.log('stop recording')
     recorder.stopRecording(function (videoUrlObject) {
-      video.src = videoUrlObject
-      video.controls = true
+      recordedView.src = videoUrlObject
+      recordedView.style.zIndex = 1
+      recordedView.controls = true
 
       // NOTE(jordan): save this to the issue model
       var blob = recorder.getBlob()
+      recordBtn.removeEventListener('click', stopRecording)
+      recordBtn.addEventListener('click', startRecording)
     })
   }
 
-  function startRecording (stream) {
-    // NOTE(jordan): hide placeholder
-    placeholder.style.display = 'none'
+  function startRecording (evt) {
+    evt.preventDefault()
+    evt.stopPropagation()
 
-    // NOTE(jordan): show stream while recording
-    video.src = URL.createObjectURL(stream)
+    ;(navigator.mediaDevices.getUserMedia
+      || navigator.getUserMedia).call(navigator, mediaRequests,
+        function (stream) {
+      console.log('begin recording')
 
-    // NOTE(jordan): set up RecordRTC
-    recorder = RecordRTC(stream, {
-      mimeType: 'video/webm',
-      bitsPerSecond: 128000
-    })
+      // NOTE(jordan): show stream while recording
+      if (!streamView.src)
+        streamView.src = URL.createObjectURL(stream)
 
-    // NOTE(jordan): start RecordRTC
-    recorder.startRecording()
-    // NOTE(jordan): change its click handler to stop the recording
-    recordBtn.removeEventListener('click', listenerId)
-    listenerId = recordBtn.addEventListener('click', stopRecording)
+      // NOTE(jordan): set up RecordRTC
+      recorder = RecordRTC(stream, {
+        mimeType: 'video/webm',
+        bitsPerSecond: 128000
+      })
+
+      // NOTE(jordan): hide placeholder
+      placeholder.style.display = 'none'
+
+      recordedView.style.zIndex = 0
+      recordedView.controls = false
+
+      // NOTE(jordan): start RecordRTC
+      recorder.startRecording()
+      // NOTE(jordan): change its click handler to stop the recording
+      recordBtn.removeEventListener('click', startRecording)
+      recordBtn.addEventListener('click', stopRecording)
+    }, error)
   }
 
   function error (error) {
@@ -53,17 +73,9 @@ module.exports = function () {
     console.error(error)
   }
 
-  listenerId = recordBtn.addEventListener('click', function (evt) {
-    console.log(arguments)
-    console.log(evt)
-    evt.preventDefault()
-    ;(navigator.mediaDevices.getUserMedia
-      || navigator.getUserMedia).call(navigator, mediaRequests,
-        startRecording,
-        error)
-  })
+  recordBtn.addEventListener('click', startRecording)
 
-  var requiredFields = [ title, description, video ]
+  var requiredFields = [ title, description, recordedView ]
 
   ;[ title, description ].forEach(function (field) {
     field.addEventListener('change', function (evt) {
