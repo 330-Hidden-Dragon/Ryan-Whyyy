@@ -1,6 +1,5 @@
 // NOTE(jordan): this will be the 'entry' point for our application
 var createIssuePageController = require('./create-issue')
-  , issue = require('./schemas/issue.js')
 
 var currentPage = window.location.pathname
   .split('/')   // this
