@@ -10,22 +10,39 @@ module.exports = function () {
     , support = q1('.support-btn')
     , template = q1('#post-template')
     , parser = new DOMParser()
+    , _loaded = false
 
   var issueKey = window.location.search.substr(1)
 
-  db.allDocs({ key: issueKey, include_docs: true }).then(function (result) {
-    console.log(result)
-    var issue = result.rows[0].doc
-    var t = template.innerHTML.replace(/%7B/g, '{').replace(/%7D/g, '}')
-    var issue = Mustache.render(t, issue)
-    var doc = parser.parseFromString(issue, 'text/html').querySelector('.post')
-    doc.classList.remove('hidden')
-    var v = doc.querySelector('video')
-    v.src = v.getAttribute('data-src')
-    console.log(doc)
-    document.body.insertBefore(doc, support)
-    setupVideos()
-  })
+  youtube.init(videos, loadIssue)
+
+  function loadIssue () {
+    if (!_loaded) {
+      _loaded = true
+      db.allDocs({ key: issueKey, include_docs: true }).then(function (result) {
+        console.log(result)
+        if (result.rows.length === 0) {
+          var posts = [].slice.call(qq('.post'))
+          posts.forEach(function (post) {
+            if (post.querySelector('h2').textContent === decodeURIComponent(issueKey.split(':')[1])) {
+              post.classList.remove('hidden')
+            }
+          })
+        } else {
+          var issue = result.rows[0].doc
+          var t = template.innerHTML.replace(/%7B/g, '{').replace(/%7D/g, '}')
+          var issue = Mustache.render(t, issue)
+          var doc = parser.parseFromString(issue, 'text/html').querySelector('.post')
+          doc.classList.remove('hidden')
+          var v = doc.querySelector('video')
+          v.src = v.getAttribute('data-src')
+          console.log(doc)
+          document.body.insertBefore(doc, support)
+        }
+        setupVideos()
+      })
+    }
+  }
 
   var selflinks = qq('a[href*="' + window.location.pathname + '"]')
 
@@ -37,10 +54,12 @@ module.exports = function () {
     })
   })
 
-  youtube.init(videos, setupVideos)
-
   function setupVideos () {
-    var video = document.querySelector('.video')
+    var posts = [].slice.call(qq('.post'))
+      , validPosts = posts.filter(function (p) {
+        return !p.classList.contains('hidden')
+      })
+      , video = validPosts[0].querySelector('.video')
       , videoFrame = video.children[1]
 
     video.classList.toggle('playing')

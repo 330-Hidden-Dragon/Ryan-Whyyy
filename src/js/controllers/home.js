@@ -10,43 +10,46 @@ module.exports = function () {
     , videos  = [].slice.call(qq('.post .video'))
     , create  = q1('.new-btn')
     , template = q1('#post-template')
+    , _loaded = false
 
-  Issue.get(function (issues) {
-    issues.forEach(function (issue, idx) {
-      var t = template.innerHTML.replace(/%7B/g, '{').replace(/%7D/g, '}')
-      var issue = Mustache.render(t, issue)
-      var doc = parser.parseFromString(issue, 'text/html').querySelector('.post')
-      doc.classList.remove('hidden')
-      var v = doc.querySelector('video')
-      v.src = v.getAttribute('data-src')
-      console.log(doc)
-      document.body.insertBefore(doc, posts[0])
-    })
-    posts   = [].slice.call(qq('.post'))
-    videos  = [].slice.call(qq('.post .video'))
-    posts[0].classList.add('active')
-    setupScroll()
-    setupVideos()
-  })
+  youtube.init(videos, loadIssues)
 
-  youtube.init(videos, setupVideos)
+  function loadIssues() {
+    if (!_loaded) {
+      _loaded = true
+      Issue.get(function (issues) {
+        issues.forEach(function (issue, idx) {
+          var t = template.innerHTML.replace(/%7B/g, '{').replace(/%7D/g, '}')
+          var issue = Mustache.render(t, issue)
+          var doc = parser.parseFromString(issue, 'text/html').querySelector('.post')
+          doc.classList.remove('hidden')
+          var v = doc.querySelector('video')
+          v.src = v.getAttribute('data-src')
+          console.log(doc)
+          document.body.insertBefore(doc, posts[0])
+        })
+        posts   = [].slice.call(qq('.post'))
+        videos  = [].slice.call(qq('.post .video'))
+        posts[0].classList.add('active')
+        setupScroll()
+        setupVideos()
+      })
+    }
+  }
 
   create.addEventListener('click', function () {
     console.log('redirect to create-issue')
-    window.location.pathname = '/create-issue.html'
+    window.location.pathname = '/pages/create-issue.html'
   })
 
   function setupScroll () {
     window.addEventListener('scroll', function () {
       posts.forEach(function (post, idx) {
-        var video = videos[idx]
+        var video = post.querySelector('.video')
           , videoFrame = video.children[1]
 
-        if ((post.offsetTop < (window.scrollY - 100 + (idx > 0 ? posts[idx - 1].offsetHeight : 0))
-             && post.offsetTop > (window.scrollY - 100))
-            || (idx === 0
-                && (posts[1]
-                    && posts[1].offsetTop > (window.scrollY - 100 + post.offsetHeight)))) {
+        if ((post.offsetTop < (window.scrollY + 200)
+             && post.offsetTop > (window.scrollY - 200))) {
           post.classList.add('active')
           if (!post._clicked) {
             video.classList.add('playing')
