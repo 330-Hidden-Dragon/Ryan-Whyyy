@@ -6,7 +6,9 @@ var q1 = require('../qq').q1
   , parser = new DOMParser()
 
 module.exports = function () {
-  var posts   = [].slice.call(qq('.post'))
+  var posts   = [].slice.call(qq('.post')).filter(function (p) {
+      return !p.classList.contains('hidden')
+    })
     , videos  = [].slice.call(qq('.post .video'))
     , create  = q1('.new-btn')
     , template = q1('#post-template')
@@ -29,12 +31,11 @@ module.exports = function () {
           console.log(doc)
           document.body.insertBefore(doc, posts[0])
         })
-        posts   = [].slice.call(qq('.post'))
-        videos  = [].slice.call(qq('.post .video'))
-        validPosts = posts.filter(function (p) {
+        posts   = [].slice.call(qq('.post')).filter(function (p) {
           return !p.classList.contains('hidden')
         })
-        validPosts[0].classList.add('active')
+        videos  = [].slice.call(qq('.post .video'))
+        posts[0].classList.add('active')
         setupScroll()
         setupVideos()
       })
@@ -52,8 +53,8 @@ module.exports = function () {
         var video = post.querySelector('.video')
           , videoFrame = video.children[1]
 
-        if ((post.offsetTop < (window.scrollY + 200)
-             && post.offsetTop > (window.scrollY - 200))) {
+        if ((post.offsetTop < (window.scrollY + 600)
+             && post.offsetTop > (window.scrollY - 100))) {
           post.classList.add('active')
           if (!post._clicked) {
             video.classList.add('playing')

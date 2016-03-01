@@ -12,7 +12,7 @@ module.exports = function () {
     , parser = new DOMParser()
     , _loaded = false
 
-  var issueKey = window.location.search.substr(1)
+  var issueKey = decodeURIComponent(window.location.search.substr(1))
 
   youtube.init(videos, loadIssue)
 

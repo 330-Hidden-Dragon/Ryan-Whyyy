@@ -1,9 +1,9 @@
-mixin post(title, videoType, source, description, active)
-  .post(class='#{active ? "active" : ""}')&attributes(attributes)
-    - var key = 'Issue:' + title + ':' + description.substring(0, 25).replace(/ /g, '_')
+mixin post(title, videoType, source, description, key)
+  .post&attributes(attributes)
+    - var key = key || 'Issue:' + title + ':' + description.substring(0, 25).replace(/ /g, '_')
     a(href='./issue.html?' + key)
       h2.title=title
-    .video(class='#{active ? "playing" : ""}')
+    .video
       .click-capture
       - if (videoType === 'iframe') {
         iframe(

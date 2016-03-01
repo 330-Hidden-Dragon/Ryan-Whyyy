@@ -115,7 +115,7 @@ module.exports = function () {
         video: reader.result
       }
 
-      data._id = 'Issue:' + data.title
+      data._id = 'Issue:' + data.title.substring(0, 25).replace(/ /g, '_')
                  + ':' + data.description.substring(0, 25).replace(/ /g, '_')
 
       var newIssue = Issue(data)
