@@ -2,6 +2,8 @@
 var RecordRTC = require('recordrtc')
   , util      = require('../util')
   , q1        = require('../qq').q1
+  , Issue = require('../schemas/issue')
+  , db = require('../db')
 
 module.exports = function () {
   var mediaRequests = { audio: true, video: true }
@@ -12,10 +14,8 @@ module.exports = function () {
     , description   = q1('textarea')
     , title         = q1('input')
     , submitBtn     = q1('.new-btn')
-    , hasUserMedia  = false
-    , streamURLObject
     , recorder
-    , listenerId
+    , blob
 
   util.togglePlaceholder(description)
 
@@ -29,7 +29,8 @@ module.exports = function () {
       recordedView.controls = true
 
       // NOTE(jordan): save this to the issue model
-      var blob = recorder.getBlob()
+      blob = recorder.getBlob()
+      validate()
       recordBtn.removeEventListener('click', stopRecording)
       recordBtn.addEventListener('click', startRecording)
     })
@@ -77,23 +78,9 @@ module.exports = function () {
 
   recordBtn.addEventListener('click', startRecording)
 
-  var requiredFields = [ title, description, recordedView ]
-
-  ;[ title, description ].forEach(function (field) {
-    field.addEventListener('change', function (evt) {
-      if (requiredFields.every(function (f) {
-        return (f.value && f.value.length > 0 && f.value !== f.textContent)
-               || (f.src !== undefined && f.src !== '')
-      })) {
-        submitBtn.disabled = false
-      } else {
-        submitBtn.disabled = true
-      }
-    })
-  })
-
-  recordBtn.addEventListener('click', function () {
+  function validate () {
     if (requiredFields.every(function (f) {
+      console.log(f, f.value, f.src)
       return (f.value && f.value.length > 0 && f.value !== f.textContent)
              || (f.src !== undefined && f.src !== '')
     })) {
@@ -101,11 +88,40 @@ module.exports = function () {
     } else {
       submitBtn.disabled = true
     }
+  }
+
+  var requiredFields = [ title, description, recordedView ]
+
+  ;[ title, description ].forEach(function (field) {
+    field.addEventListener('change', function (evt) {
+      validate()
+    })
+  })
+
+  recordBtn.addEventListener('click', function () {
+    validate()
   })
 
   submitBtn.addEventListener('click', function (evt) {
     evt.preventDefault()
     evt.stopPropagation()
-    console.log('create issue')
+
+    var reader = new window.FileReader()
+    reader.readAsDataURL(blob)
+    reader.onloadend = function () {
+      var data = {
+        title: title.value,
+        description: description.value,
+        video: reader.result
+      }
+
+      data._id = 'Issue:' + data.title
+                 + ':' + data.description.substring(0, 25).replace(/ /g, '_')
+
+      var newIssue = Issue(data)
+      db.put(newIssue).then(function () {
+        window.location.href = '/home-page.html'
+      })
+    }
   })
 }

@@ -1,12 +1,11 @@
 var Model  = require('./classy.model.js')
   , Schema = require('./classy.schema.js')
+  , db     = require('../db')
 
 var issue = Schema({
-  id: Number,
-  author: Number, // user id
   title: String,
   description: String,
   video: String   // url
 })
 
-module.exports = Issue = Model(issue)
+module.exports = Model(issue)

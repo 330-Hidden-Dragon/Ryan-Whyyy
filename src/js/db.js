@@ -1,4 +1,12 @@
 var PouchDB = require('pouchdb')
-  , db      = new PouchDB('app')
+  , pdbFind = require('pouchdb-find')
 
-module.exports = db
+PouchDB.plugin(pdbFind)
+
+var db = window.db
+
+module.exports = db = new PouchDB('viva_voce')
+
+db.on('error', function (err) {
+  console.error(err)
+})

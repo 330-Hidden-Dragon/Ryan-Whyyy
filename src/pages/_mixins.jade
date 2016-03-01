@@ -1,8 +1,7 @@
 mixin post(title, videoType, source, description, active)
   .post(class='#{active ? "active" : ""}')&attributes(attributes)
-    - var data = [ title, source, description ].map(encodeURIComponent)
-    - var query = '?title=' + data[0] + '&video=' + data[1] + '&description=' + data[2]
-    a(href='./issue.html' + query)
+    - var key = 'Issue:' + title + ':' + description.substring(0, 25).replace(/ /g, '_')
+    a(href='./issue.html?' + key)
       h2.title=title
     .video(class='#{active ? "playing" : ""}')
       .click-capture
@@ -14,9 +13,9 @@ mixin post(title, videoType, source, description, active)
           allowfullscreen
           )
       - } else {
-        video(src!=source)
+        video(data-src!=source, controls)
       - }
-    a(href='./issue.html' + query)
+    a(href='./issue.html?' + key)
       p.description
         != description
 

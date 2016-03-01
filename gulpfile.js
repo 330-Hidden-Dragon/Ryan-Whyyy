@@ -26,7 +26,7 @@ var dest = {
 // NOTE(jordan): other global opts, by task
 var opts = {
   bify: {
-    transform: [ uglifyify ]
+    transform: [ /*uglifyify*/ ]
   }
 }
 

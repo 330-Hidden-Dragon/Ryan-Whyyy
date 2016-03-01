@@ -23,17 +23,26 @@ youtube.togglePlaying = function togglePlaying (videoFrame) {
       videoFrame.ytPlayer.pauseVideo()
     else
       videoFrame.ytPlayer.playVideo()
+  } else {
+    if (!videoFrame.paused)
+      videoFrame.pause()
+    else
+      videoFrame.play()
   }
 }
 
 youtube.play = function startPlaying (videoFrame) {
   if (videoFrame.ytPlayer) {
     videoFrame.ytPlayer.playVideo()
+  } else {
+    videoFrame.play()
   }
 }
 
 youtube.pause = function stopPlaying (videoFrame) {
   if (videoFrame.ytPlayer) {
     videoFrame.ytPlayer.pauseVideo()
+  } else {
+    videoFrame.pause()
   }
 }
