@@ -11,10 +11,6 @@ module.exports = function () {
     , create  = q1('.new-btn')
     , template = q1('#post-template')
 
-  youtube.init(videos, setupVideos)
-
-  console.log(Issue)
-
   Issue.get(function (issues) {
     issues.forEach(function (issue, idx) {
       var t = template.innerHTML.replace(/%7B/g, '{').replace(/%7D/g, '}')
@@ -24,16 +20,16 @@ module.exports = function () {
       var v = doc.querySelector('video')
       v.src = v.getAttribute('data-src')
       console.log(doc)
-      if ((idx + 1) === issues.length) {
-        doc.classList.add('active')
-      }
       document.body.insertBefore(doc, posts[0])
     })
     posts   = [].slice.call(qq('.post'))
     videos  = [].slice.call(qq('.post .video'))
-    setupVideos()
+    posts[0].classList.add('active')
     setupScroll()
+    setupVideos()
   })
+
+  youtube.init(videos, setupVideos)
 
   create.addEventListener('click', function () {
     console.log('redirect to create-issue')
@@ -71,10 +67,12 @@ module.exports = function () {
 
       if (video.parentElement.classList.contains('active')) {
         video.classList.add('playing')
-        if (videoFrame.ytPlayer)
-          videoFrame.ytPlayer.playVideo()
-        else
+        if (videoFrame.tagName === 'IFRAME') {
+          if (videoFrame.ytPlayer)
+            videoFrame.ytPlayer.playVideo()
+        } else {
           videoFrame.play()
+        }
       }
 
       video.addEventListener('click', function (evt) {
