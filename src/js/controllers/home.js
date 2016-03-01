@@ -18,6 +18,7 @@ module.exports = function () {
     if (!_loaded) {
       _loaded = true
       Issue.get(function (issues) {
+        console.log(issues)
         issues.forEach(function (issue, idx) {
           var t = template.innerHTML.replace(/%7B/g, '{').replace(/%7D/g, '}')
           var issue = Mustache.render(t, issue)
@@ -30,7 +31,10 @@ module.exports = function () {
         })
         posts   = [].slice.call(qq('.post'))
         videos  = [].slice.call(qq('.post .video'))
-        posts[0].classList.add('active')
+        validPosts = posts.filter(function (p) {
+          return !p.classList.contains('hidden')
+        })
+        validPosts[0].classList.add('active')
         setupScroll()
         setupVideos()
       })
@@ -44,7 +48,7 @@ module.exports = function () {
 
   function setupScroll () {
     window.addEventListener('scroll', function () {
-      posts.forEach(function (post, idx) {
+      posts.forEach(function (post) {
         var video = post.querySelector('.video')
           , videoFrame = video.children[1]
 
@@ -65,7 +69,7 @@ module.exports = function () {
   }
 
   function setupVideos () {
-    videos.forEach(function (video, idx) {
+    videos.forEach(function (video) {
       var videoFrame = video.children[1]
 
       if (video.parentElement.classList.contains('active')) {

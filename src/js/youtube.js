@@ -1,7 +1,13 @@
 var youtube = module.exports = { }
 
+youtube._initialized = false
+
+window.onYouTubeIframeAPIReady = function () {
+  youtube._initialized = true
+}
+
 youtube.init = function init (videos, onReady) {
-  window.onYouTubeIframeAPIReady = function () {
+  function _init () {
     console.log('Init YouTube iFrame API')
     videos.forEach(function (video) {
       var videoFrame = video.children[1]
@@ -14,6 +20,10 @@ youtube.init = function init (videos, onReady) {
       }
     })
   }
+  if (youtube._initialized)
+    _init()
+  else
+    window.onYouTubeIframeAPIReady = _init
 }
 
 youtube.togglePlaying = function togglePlaying (videoFrame) {

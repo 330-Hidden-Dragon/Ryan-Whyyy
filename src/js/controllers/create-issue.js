@@ -120,7 +120,7 @@ module.exports = function () {
 
       var newIssue = Issue(data)
       db.put(newIssue).then(function () {
-        window.location.href = '/home-page.html'
+        window.location.href = '/pages/home-page.html'
       })
     }
   })

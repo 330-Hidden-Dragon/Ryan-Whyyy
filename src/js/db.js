@@ -3,6 +3,8 @@ var PouchDB = require('pouchdb')
 
 PouchDB.plugin(pdbFind)
 
+window.PouchDB = PouchDB
+
 var db = window.db
 
 module.exports = db = new PouchDB('viva_voce')
